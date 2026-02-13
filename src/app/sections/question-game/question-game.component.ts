@@ -1,5 +1,5 @@
 import {isPlatformBrowser , NgIf } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, PLATFORM_ID, Inject, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import Typed from 'typed.js';
 import { HttpClient } from '@angular/common/http';
@@ -31,20 +31,23 @@ export class QuestionGameComponent implements AfterViewInit {
   answers: { question: string; answer: string }[] = [];
 
   questions = [
-    'Do you feel happy when we talk?',
-    'Say you like me or not?',
-    'Is there a tiny space for me in your heart?',
-    'Am I special to you in some way?'
+    'ne ena mannippana yes click pannu, ilana no click pannu',
+    'ini na ithu mari pana maten, sorry 😒',
+    'enaku purithu intha edathula nana iruntha evlo kova patturupen, enalam panirupen nu enaku nala purithu, na unarnthuten ini intha mari pana maten nammbu 😒',
+    'nethu lam na na yen panen nu lam yositutha irunthen, ona pathi entha kavalaium illama iruken nu nenaikkatha, yosipen neraya',
+    'un life pathilam yosippen, ona pathi yosippen, unkuda irukka mari lam neraya yosippen unta avlova sonathu ila athanala ona na ona pathi yosikatha mari irukkum.',
+    'ena manuchutta na yes kuthu ulla po ✨, illa na no kuduthuru 😒'
   ];
 
   trapQuestions = [1,3];
   protected bubbles: FloatingItem[] = [];
   currentIndex = 0;
   completed = false;
+  noButtonClicked = false;
 
   private typed?: Typed;
 
-  constructor(@Inject(PLATFORM_ID) platformId: object,private router: Router, private http: HttpClient) {
+  constructor(@Inject(PLATFORM_ID) platformId: object,private router: Router, private http: HttpClient, private cdr: ChangeDetectorRef) {
 
     const isBrowser = isPlatformBrowser(platformId);
     const isMobile = isBrowser ? window.matchMedia('(max-width: 640px)').matches : false;
@@ -56,6 +59,21 @@ export class QuestionGameComponent implements AfterViewInit {
   }
 
   private typeQuestion() {
+
+        console.log('Typing question at index:', this.noButtonClicked);
+
+
+    if(this.noButtonClicked){
+       this.currentIndex = 0;
+    }
+
+        console.log('Typing question at index:', this.currentIndex);
+
+
+    if (!this.qText || !this.qText.nativeElement) {
+      return;
+    }
+
     if (this.typed) this.typed.destroy();
 
     this.qText.nativeElement.innerHTML = '';
@@ -85,6 +103,8 @@ export class QuestionGameComponent implements AfterViewInit {
     return item.id;
   }
   onYes() {
+    this.noButtonClicked = false; // Reset flag when Yes is clicked
+    this.cdr.detectChanges(); // Ensure view updates before accessing qText
     this.saveAnswer('YES');
 
     if (this.currentIndex >= this.questions.length) {
@@ -92,11 +112,14 @@ export class QuestionGameComponent implements AfterViewInit {
       return;
     }
 
-    this.typeQuestion();
+    setTimeout(() => {
+      this.typeQuestion();
+    }, 0);
   }
 
   onNo() {
-   this.saveAnswer('NO');
+    this.noButtonClicked = true;
+    this.saveAnswer('NO');
 
     if (this.currentIndex >= this.questions.length) {
       this.completed = true;
@@ -121,7 +144,10 @@ export class QuestionGameComponent implements AfterViewInit {
     return;
   }
 
-  this.typeQuestion();
+  this.cdr.detectChanges(); // Ensure view updates before accessing qText
+  setTimeout(() => {
+    this.typeQuestion();
+  }, 0);
 }
 
 sendToApi() {

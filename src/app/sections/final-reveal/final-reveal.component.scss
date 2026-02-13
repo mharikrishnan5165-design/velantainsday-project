@@ -35,6 +35,76 @@
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
 }
 
+.flying-hearts-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heart-item {
+  position: absolute;
+  bottom: -5vh;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #ff8dc7, #ff5ca9);
+  transform: rotate(45deg);
+  animation: flyingHeartRise 14s linear infinite;
+  opacity: 0.45;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.25));
+  will-change: transform, opacity;
+}
+
+.heart-item::before,
+.heart-item::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.heart-item::before {
+  top: -50%;
+  left: 0;
+}
+
+.heart-item::after {
+  left: -50%;
+  top: 0;
+}
+
+@for $i from 1 through 30 {
+  .heart-item:nth-child(#{$i}) {
+    left: #{math.floor(math.random() * 100)}%;
+    $size: 12 + math.floor(math.random() * 22);
+    width: #{$size}px;
+    height: #{$size}px;
+    animation-delay: #{math.random() * -20}s;
+    animation-duration: #{10 + math.random() * 10}s;
+    opacity: #{0.2 + math.random() * 0.4};
+  }
+}
+
+@keyframes flyingHeartRise {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(45deg) scale(0.9);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.5;
+  }
+  92% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(0, -125vh, 0) rotate(45deg) scale(1.05);
+    opacity: 0;
+  }
+}
+
 .firework {
   position: absolute;
   width: 8px;

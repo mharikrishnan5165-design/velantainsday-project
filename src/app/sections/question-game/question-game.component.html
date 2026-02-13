@@ -22,10 +22,14 @@
 
     <p class="title">A TINY GAME</p>
 
-    <p #qText class="question__text" *ngIf="!completed"></p>
+    <p #qText class="question__text" *ngIf="!completed && !noButtonClicked"></p>
 
     <p class="question__text" *ngIf="completed">
       Yay! Ready to see memories 💖
+    </p>
+
+    <p class="question__text" *ngIf="!completed && noButtonClicked" style="font-size: 2.5rem; font-weight: 600; color: inherit;">
+      Therium ne no kuduppanu, atha intha tab la yes nu vachurukken 😎💕
     </p>
 
     <div class="buttons" *ngIf="!completed">
@@ -34,6 +38,7 @@
 
       <button
         class="btn btn--no"
+        *ngIf="!noButtonClicked"
         [disabled]="isNoBlocked()"
         (click)="onNo()">
         NO

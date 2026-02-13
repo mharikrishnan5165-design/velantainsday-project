@@ -24,10 +24,10 @@ export class CuteCardsComponent {
   }
 
  protected readonly messages: string[] = [
-  'From the day you came into my life, everything started feeling lighter. Your smile has this magic that makes even ordinary moments special. On your birthday, I just want you to know how important you are to me.',
-  'I may not say it every day, but you mean a lot to me. Your happiness matters to me more than you think. If there’s ever a moment you feel low, remember there’s someone who genuinely cares for you.',
-  'No matter what happens in life, I wish to always see you smiling and peaceful. I’ll always be there for you in whatever way I can, because you deserve all the good things this world has to offer.',
-  'Happy Birthday to someone truly special. May this year bring you beautiful memories, warm moments, and endless reasons to smile. Stay happy, stay amazing — you mean more than words can explain.'
+  'innaiku velantainday la so wish pandrathuku vela irukku nu solitu itha panitu irunthen, ona kandukkalanu nenaikkatha itha pandara arvathula tha apdi sonen, romba effort potu panitu irukken, so surprise ah sollalam nu tha apo vey ethum solama vela irukkunu vanthen, ilana solirupen.',
+  'ipo lam enanu thrl ne illanavo, yenta pesalanavo enaku yarumey illatha mari agiren, ethachum enaku mind sari illanavo, pasanga kulla sanda vanthalo, ne irukkanu nenacha pothu yen mind clear agirum, unta pesuna hpy agiren',
+  'na unmela neraya visayathuku kova paduven, venuney call edukama iruppen elamey oru kovathunala mattum tha apdi irupen, anaiku kuda ne call edukkala yen kuda ne call pesalandra kova mattum tha athanala tha na call edukkama irunthen, yen kova paduren na unta pesanum nenaikuren apo ne edukkalanu kova varuthu. avlotha matha padi na venuney lam panala, atha ne purujukita nu enaku theriya paduthunaley na thirumba thirumba unmela kova pada maten.',
+  'ipothiku ivlo paniruken, panumpothu thokam varuthu, balance na update panitu aanuppuren.'
 ];
 
 private typeMessage(message: string) {

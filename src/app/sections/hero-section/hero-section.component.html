@@ -53,4 +53,8 @@
       Let's Start <span class="cta__emoji" aria-hidden="true">💖</span>
     </button>
   </div>
+
+  <div class="time-lock-overlay" *ngIf="isLocked" aria-hidden="true">
+    <div class="countdown">{{ countdownText }}</div>
+  </div>
 </section>
