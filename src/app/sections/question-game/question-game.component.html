@@ -1,0 +1,52 @@
+<section class="question-game">
+
+  <div class="layer layer--glow" aria-hidden="true"></div>
+  <div class="layer layer--vignette" aria-hidden="true"></div>
+
+  <div class="layer layer--bubbles" aria-hidden="true">
+    <span
+      class="bubble"
+      *ngFor="let b of bubbles; trackBy: trackById"
+      [style.--left]="b.left + '%'"
+      [style.--size]="b.size + 'px'"
+      [style.--duration]="b.duration + 's'"
+      [style.--delay]="b.delay + 's'"
+      [style.--opacity]="b.opacity"
+      [style.--blur]="(b.blur ?? 0) + 'px'"
+      [style.--accent]="b.accent ?? '#ffffff'"
+    ></span>
+  </div>
+
+
+  <div class="card">
+
+    <p class="title">A TINY GAME</p>
+
+    <p #qText class="question__text" *ngIf="!completed"></p>
+
+    <p class="question__text" *ngIf="completed">
+      Yay! Ready to see memories 💖
+    </p>
+
+    <div class="buttons" *ngIf="!completed">
+
+      <button class="btn btn--yes" (click)="onYes()">YES</button>
+
+      <button
+        class="btn btn--no"
+        [disabled]="isNoBlocked()"
+        (click)="onNo()">
+        NO
+      </button>
+
+    </div>
+
+    <div *ngIf="completed" class="continue">
+      <button class="btn btn--continue" (click)="continueToMemories()">
+        Continue →
+      </button>
+    </div>
+
+  </div>
+
+</section>

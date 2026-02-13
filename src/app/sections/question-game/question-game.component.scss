@@ -1,0 +1,179 @@
+:host {
+  display: block;
+}
+
+.question-game {
+  position: relative;
+  min-height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.25rem, 3vw, 3.25rem);
+  color: var(--text-primary);
+  background: transparent;
+  isolation: isolate;
+}
+
+.card {
+  width: min(720px, 92vw);
+  padding: 2.5rem;
+  border-radius: 28px;
+  background: rgba(81, 61, 78, 0.85);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 30px 80px rgba(0,0,0,.5);
+  text-align:center;
+  color: var(--text-primary);
+  animation: cardIn .6s ease forwards;
+}
+
+/* TEXT */
+
+.title{
+  letter-spacing:.25em;
+  font-size:.8rem;
+  color:#ffcdfc;
+}
+
+.question__text{
+  font-size:2rem;
+  margin:1.2rem 0 2rem;
+  animation: fadeUp .5s ease;
+}
+
+/* BUTTONS */
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.btn{
+  padding:1rem 2.2rem;
+  border:none;
+  border-radius:14px;
+  font-weight:700;
+  color:white;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ff4fd8,#a855f7);
+  transition:.25s;
+}
+
+/* YES GLOW */
+
+.btn--yes{
+  animation: yesPulse 2.5s infinite;
+}
+
+.btn--no{
+   animation: yesPulse 2.5s infinite;
+}
+
+.btn:hover{
+  transform:translateY(-2px) scale(1.04);
+}
+
+/* NO DISABLED STYLE */
+
+.btn:disabled{
+  cursor:not-allowed;
+}
+
+/* CONTINUE */
+
+.continue{
+  margin-top:2rem;
+  animation: fadeUp .6s ease forwards;
+}
+
+.btn--continue{
+  background:linear-gradient(135deg,#7dd3fc,#c084fc);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.layer--glow {
+  background: none;
+}
+
+.layer--vignette {
+  background: none;
+}
+
+.bubble {
+  position: absolute;
+  left: var(--left);
+  bottom: -18vh;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  transform: translate3d(-50%, 0, 0);
+  opacity: var(--opacity);
+  filter: blur(var(--blur));
+  background:
+    radial-gradient(
+      circle at 28% 28%,
+      rgba(255, 255, 255, 0.65),
+      rgba(255, 255, 255, 0.0) 58%
+    ),
+    radial-gradient(
+      circle at 62% 72%,
+      color-mix(in srgb, var(--accent) 62%, transparent),
+      rgba(142, 45, 226, 0.16) 66%,
+      rgba(0, 0, 0, 0.0) 80%
+    );
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, rgba(255, 255, 255, 0.10));
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.14),
+    0 0 26px color-mix(in srgb, var(--accent) 24%, transparent);
+  will-change: transform, opacity;
+  animation: bubbleRise var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+/* ANIMATIONS */
+
+@keyframes yesPulse{
+  0%,100%{box-shadow:0 0 8px #ff4fd8}
+  50%{box-shadow:0 0 15px #ff4fd8}
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(12px)}
+  to{opacity:1; transform:none}
+}
+
+@keyframes cardIn{
+  from{opacity:0; transform:scale(.9)}
+  to{opacity:1; transform:scale(1)}
+}
+
+@keyframes bubbleRise {
+  0% {
+    transform: translate3d(-50%, 0, 0) scale(0.98);
+  }
+  50% {
+    transform: translate3d(calc(-50% + 2.4vw), -60vh, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(calc(-50% - 1.8vw), -125vh, 0) scale(1.06);
+  }
+}
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+  .buttons{
+    flex-direction:column;
+  }
+
+  .btn{
+    width:100%;
+  }
+}

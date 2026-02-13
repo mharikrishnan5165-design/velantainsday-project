@@ -1,0 +1,56 @@
+<section class="hero">
+  <div class="layer layer--glow" aria-hidden="true"></div>
+  <div class="layer layer--vignette" aria-hidden="true"></div>
+
+  <div class="layer layer--bubbles" aria-hidden="true">
+    <span
+      class="bubble"
+      *ngFor="let b of bubbles; trackBy: trackById"
+      [style.--left]="b.left + '%'"
+      [style.--size]="b.size + 'px'"
+      [style.--duration]="b.duration + 's'"
+      [style.--delay]="b.delay + 's'"
+      [style.--opacity]="b.opacity"
+      [style.--blur]="(b.blur ?? 0) + 'px'"
+      [style.--accent]="b.accent ?? '#ffffff'"
+    ></span>
+  </div>
+
+  <div class="layer layer--hearts" aria-hidden="true">
+    <span
+      class="heart"
+      *ngFor="let h of hearts; trackBy: trackById"
+      [style.--left]="h.left + '%'"
+      [style.--top]="(h.top ?? 50) + '%'"
+      [style.--size]="h.size + 'px'"
+      [style.--duration]="h.duration + 's'"
+      [style.--delay]="h.delay + 's'"
+      [style.--opacity]="h.opacity"
+      [style.--blur]="(h.blur ?? 0) + 'px'"
+    ></span>
+  </div>
+
+  <div class="layer layer--petals" aria-hidden="true">
+    <span
+      class="petal"
+      *ngFor="let p of petals; trackBy: trackById"
+      [style.--left]="p.left + '%'"
+      [style.--size]="p.size + 'px'"
+      [style.--duration]="p.duration + 's'"
+      [style.--delay]="p.delay + 's'"
+      [style.--opacity]="p.opacity"
+      [style.--rot]="(p.rotation ?? 0) + 'deg'"
+    ></span>
+  </div>
+
+  <div class="content" role="group" aria-label="Birthday hero">
+    <h1 class="title">
+      Hey You <span class="title__emoji" aria-hidden="true">❤️</span>
+    </h1>
+    <p class="subtitle">This little surprise is only for you</p>
+
+    <button class="cta" type="button" (click)="startExperience()">
+      Let's Start <span class="cta__emoji" aria-hidden="true">💖</span>
+    </button>
+  </div>
+</section>

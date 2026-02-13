@@ -1,0 +1,50 @@
+<section class="final">
+  <div class="overlay" aria-hidden="true"></div>
+  <div class="sky">
+    <div class="firework firework--1"></div>
+    <div class="firework firework--2"></div>
+    <div class="firework firework--3"></div>
+    <div class="firework firework--4"></div>
+    <div class="firework firework--5"></div>
+
+    <div class="layer layer--bubbles" aria-hidden="true">
+      <span
+        class="bubble"
+        *ngFor="let b of bubbles; trackBy: trackById"
+        [style.--left]="b.left + '%'"
+        [style.--size]="b.size + 'px'"
+        [style.--duration]="b.duration + 's'"
+        [style.--delay]="b.delay + 's'"
+        [style.--opacity]="b.opacity"
+        [style.--blur]="(b.blur ?? 0) + 'px'"
+        [style.--accent]="b.accent ?? '#ffffff'"
+      ></span>
+    </div>
+
+    <div class="balloons" aria-hidden="true">
+      <span *ngFor="let b of [1,2,3,4,5,6]" class="balloon"></span>
+    </div>
+
+    <div class="hearts" aria-hidden="true">
+      <span *ngFor="let h of [1,2,3,4,5,6,7,8]" class="heart"></span>
+    </div>
+
+    <div class="sparkles" aria-hidden="true">
+      <span *ngFor="let s of [1,2,3,4,5,6,7,8,9,10,11,12]" class="sparkle"></span>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1 class="headline">Happy Birthday SomeOne</h1>
+    <p class="subhead">From me, straight from my heart ❤️</p>
+
+    <div class="message">
+      <p>I hope your day is as beautiful as your smile.</p>
+      <p>May all your dreams come true 💖</p>
+      <p>I may not say everything… but you mean a lot.</p>
+      <p>Stay happy always 💖</p>
+    </div>
+
+    <button class="replay" type="button" (click)="replay()">Replay Memories 🔁</button>
+  </div>
+</section>

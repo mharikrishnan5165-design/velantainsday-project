@@ -1,0 +1,427 @@
+@use 'sass:math';
+
+:root {
+  --final-bg: radial-gradient(circle at 20% 20%, rgba(255, 123, 176, 0.08), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(110, 61, 255, 0.12), transparent 32%),
+    linear-gradient(160deg, #090212 0%, #130822 45%, #05030c 100%);
+}
+
+.final {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: var(--final-bg);
+  color: #ffe8ff;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 2, 12, 0.8), rgba(8, 3, 18, 0.88));
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+
+.sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
+}
+
+.firework {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd1f0, rgba(255, 209, 240, 0.2));
+  animation: pop 2.8s infinite ease-in;
+  opacity: 0.85;
+}
+
+.firework::before,
+.firework::after {
+  content: '';
+  position: absolute;
+  inset: -120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #ff7bb0,
+    #ffd1f0 20%,
+    #7ad0ff 40%,
+    #c23da7 60%,
+    #ffd1f0 80%,
+    #ff7bb0 100%
+  );
+  mask: radial-gradient(transparent 30%, black 65%);
+  animation: burst 2.8s infinite ease-out;
+}
+
+.firework::after {
+  inset: -140px;
+  filter: blur(10px);
+  opacity: 0.6;
+}
+
+.firework--1 { left: 20%; top: 30%; animation-delay: 0s; }
+.firework--2 { left: 70%; top: 22%; animation-delay: 0.6s; }
+.firework--3 { left: 50%; top: 12%; animation-delay: 1.2s; }
+.firework--4 { left: 18%; top: 65%; animation-delay: 1.8s; }
+.firework--5 { left: 82%; top: 58%; animation-delay: 2.2s; }
+
+.layer--bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+.bubble {
+  position: absolute;
+  left: var(--left);
+  bottom: -18vh;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  transform: translate3d(-50%, 0, 0);
+  opacity: var(--opacity);
+  filter: blur(var(--blur));
+  background:
+    radial-gradient(
+      circle at 28% 28%,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.08) 58%
+    ),
+    radial-gradient(
+      circle at 62% 72%,
+      color-mix(in srgb, var(--accent) 70%, transparent),
+      rgba(102, 214, 255, 0.2) 66%,
+      rgba(0, 0, 0, 0) 80%
+    );
+  border: 1px solid color-mix(in srgb, var(--accent) 42%, rgba(255, 255, 255, 0.18));
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.18),
+    0 0 26px color-mix(in srgb, var(--accent) 28%, transparent);
+  will-change: transform, opacity;
+  animation: bubbleRise var(--duration) linear infinite;
+  animation-delay: var(--delay);
+}
+
+.balloons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.balloon {
+  position: absolute;
+  width: 72px;
+  height: 96px;
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(circle at 30% 30%, #ffe6ff, rgba(255, 132, 214, 0.65));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  animation: balloonRise 14s ease-in-out infinite;
+  opacity: 0.72;
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  width: 4px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateX(-50%);
+}
+
+@for $i from 1 through 6 {
+  .balloon:nth-child(#{$i}) {
+    left: #{math.random(100)}%;
+    animation-delay: #{math.random(800) / 100}s;
+    animation-duration: #{12 + math.random(8)}s;
+    filter: hue-rotate(#{math.random(60)}deg) saturate(1.2);
+  }
+}
+
+.hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #ff8dc7, #ff5ca9);
+  transform: rotate(45deg);
+  animation: float 12s linear infinite;
+  opacity: 0.45;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.25));
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.heart::before {
+  top: -9px;
+  left: 0;
+}
+
+.heart::after {
+  left: -9px;
+  top: 0;
+}
+
+@for $i from 1 through 8 {
+  .heart:nth-child(#{$i}) {
+    left: #{math.random(100)}%;
+    animation-delay: #{math.random(800) / 100}s;
+    animation-duration: #{10 + math.random(12)}s;
+    opacity: #{0.25 + math.random(45) / 100};
+  }
+}
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe6ff, rgba(255, 230, 255, 0));
+  animation: twinkle 3.2s ease-in-out infinite;
+  opacity: 0.65;
+}
+
+@for $i from 1 through 12 {
+  .sparkle:nth-child(#{$i}) {
+    left: #{math.random(100)}%;
+    top: #{math.random(100)}%;
+    animation-delay: #{math.random(320) / 100}s;
+    transform: scale(#{0.5 + math.random()});
+  }
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  display: grid;
+  gap: clamp(0.8rem, 2vw, 1.4rem);
+  justify-items: center;
+  animation: fadeScale 900ms ease forwards;
+  color: #ffe6ff;
+}
+
+.headline {
+  margin: 0;
+  font-family: 'Sacramento', 'Quicksand', cursive;
+  font-size: clamp(3rem, 8vw, 5.2rem);
+  letter-spacing: 0.02em;
+  text-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.55),
+    0 0 32px rgba(255, 124, 176, 0.55);
+}
+
+.subhead {
+  margin: 0;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: #ffd7f5;
+  opacity: 0.94;
+  text-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+
+.message {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: clamp(1.2rem, 4vw, 1.8rem);
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  max-width: 520px;
+}
+
+.message p {
+  margin: 0.35rem 0;
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  color: #ffeefd;
+  text-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+}
+
+.replay {
+  margin-top: 0.6rem;
+  padding: 0.95rem 1.4rem;
+  width: min(260px, 100%);
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #ff7bb0, #c23da7);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.14) inset;
+  transition: transform 200ms ease, filter 200ms ease;
+}
+
+.replay:hover {
+  transform: translateY(-1px) scale(1.02);
+  filter: brightness(1.05);
+}
+
+.replay:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+@media (max-width: 768px) {
+  .firework--3,
+  .firework--5 {
+    display: none;
+  }
+
+  .firework::before,
+  .firework::after {
+    inset: -90px;
+  }
+
+  .headline {
+    font-size: clamp(2.6rem, 10vw, 4rem);
+  }
+
+  .content {
+    gap: 1rem;
+  }
+
+  .message {
+    padding: 1rem 1.25rem;
+  }
+
+  .replay {
+    width: 100%;
+  }
+}
+
+@keyframes bubbleRise {
+  0% {
+    transform: translate3d(-50%, 0, 0) scale(0.95);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(calc(-50% + 2.4vw), -60vh, 0) scale(1.03);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(calc(-50% - 1.8vw), -125vh, 0) scale(1.08);
+    opacity: 0;
+  }
+}
+
+@keyframes balloonRise {
+  0% {
+    transform: translate3d(0, 110vh, 0) scale(0.9);
+  }
+  50% {
+    transform: translate3d(8px, 40vh, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(-10px, -20vh, 0) scale(1.05);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  30% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.4) translateY(-18px);
+  }
+}
+
+@keyframes burst {
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translate3d(0, 110vh, 0) scale(0.85) rotate(45deg);
+  }
+  100% {
+    transform: translate3d(0, -20vh, 0) scale(1.15) rotate(45deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes fadeScale {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

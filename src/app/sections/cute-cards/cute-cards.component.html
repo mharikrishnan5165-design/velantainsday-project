@@ -1,0 +1,80 @@
+<section class="cute" id="cute-cards" aria-label="Cute message cards">
+  <div class="cute__layer cute__layer--glow" aria-hidden="true"></div>
+  <div class="cute__layer cute__layer--vignette" aria-hidden="true"></div>
+  <div class="layer layer--bubbles" aria-hidden="true">
+    <span
+      class="bubble"
+      *ngFor="let b of bubbles; trackBy: trackById"
+      [style.--left]="b.left + '%'"
+      [style.--size]="b.size + 'px'"
+      [style.--duration]="b.duration + 's'"
+      [style.--delay]="b.delay + 's'"
+      [style.--opacity]="b.opacity"
+      [style.--blur]="(b.blur ?? 0) + 'px'"
+      [style.--accent]="b.accent ?? '#ffffff'"
+    ></span>
+  </div>
+
+  <div class="cute__wrap">
+    <p class="cute__hint" style="color: rgb(224, 224, 224);" *ngIf="hasMoreCards">Tap the card <span aria-hidden="true">💗</span></p>
+
+    <div class="cute__stack" *ngIf="hasMoreCards || isAnimating">
+      <div
+        *ngIf="isAnimating && previousMessage"
+        class="card card--outgoing"
+        [class.card--exit-left]="exitDirection === 'left'"
+        [class.card--exit-right]="exitDirection === 'right'"
+        aria-hidden="true"
+      >
+        <div class="card__hearts" aria-hidden="true">
+          <span
+            *ngFor="let h of heartPositions; let i = index"
+            class="card__heart"
+            [style.top]="h.top"
+            [style.left]="h.left"
+            [style.right]="h.right"
+            [style.animation-delay]="h.delay"
+            [style.font-size]="h.size"
+          >♥</span>
+        </div>
+        <div class="card__content">
+          <h3 class="card__title">For You <span aria-hidden="true">💖</span></h3>
+          <p class="card__message">{{ previousMessage }}</p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="currentMessage"
+        class="card"
+        [class.card--enter]="isEntering"
+        (click)="onCardClick()"
+        role="button"
+        tabindex="0"
+        (keydown.enter)="onCardClick()"
+        (keydown.space)="onCardClick(); $event.preventDefault()"
+        aria-label="Open message card"
+      >
+        <div class="card__hearts" aria-hidden="true">
+          <span
+            *ngFor="let h of heartPositions; let i = index"
+            class="card__heart"
+            [style.top]="h.top"
+            [style.left]="h.left"
+            [style.right]="h.right"
+            [style.animation-delay]="h.delay"
+            [style.font-size]="h.size"
+          >♥</span>
+        </div>
+        <div class="card__content">
+          <h3 class="card__title">For You <span aria-hidden="true">💖</span></h3>
+          <p class="card__message" #msg></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cute__done" *ngIf="!hasMoreCards">
+      <p>All cards opened! 💕</p>
+      <button class="cute__cta" type="button" (click)="goToFinal()">Final Surprise 🎆</button>
+    </div>
+  </div>
+</section>

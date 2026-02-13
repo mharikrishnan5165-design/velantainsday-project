@@ -1,0 +1,59 @@
+<section class="memory" id="memories" aria-label="Memory gallery">
+  <div class="layer layer--glow" aria-hidden="true"></div>
+  <div class="layer layer--vignette" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header class="header">
+      <h2 class="heading">My Favourites <span aria-hidden="true">💞</span></h2>
+    </header>
+
+    <div class="mobile mobile-slide" *ngIf="isMobile" aria-label="Mobile slideshow">
+      <div class="slide" [class.is-a]="!flip" [class.is-b]="flip">
+        <img
+          *ngIf="prevIndex !== currentIndex"
+          class="slide__img slide__img--prev"
+          [class.is-a]="!flip"
+          [class.is-b]="flip"
+          [src]="images[prevIndex]?.src"
+          [alt]="images[prevIndex]?.alt"
+          loading="eager"
+          decoding="async"
+          draggable="false"
+         (dragstart)="$event.preventDefault()"
+        />
+        <img
+          class="slide__img slide__img--current"
+          [class.is-a]="!flip"
+          [class.is-b]="flip"
+          [src]="images[currentIndex]?.src"
+          [alt]="images[currentIndex]?.alt"
+          loading="eager"
+          decoding="async"
+          draggable="false"
+         (dragstart)="$event.preventDefault()"
+        />
+      </div>
+    </div>
+
+    <div class="grid gallery" *ngIf="!isMobile" role="list" aria-label="Photo memories">
+      <figure
+        class="tile"
+        role="listitem"
+        *ngFor="let img of images; let i = index; trackBy: trackBySrc"
+        [style.--delay]="img.delay"
+        [style.--dur]="img.duration"
+        [style.--dx]="img.driftX"
+        [style.--dy]="img.driftY"
+        [style.--stagger]="(i * 90) + 'ms'"
+      >
+        <img class="photo" [src]="img.src" [alt]="img.alt" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn-cute" (click)="goToCards()" aria-label="Read little messages">
+        Read My Little Messages <span aria-hidden="true">💌</span>
+      </button>
+    </div>
+  </div>
+</section>
