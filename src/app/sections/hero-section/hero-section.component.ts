@@ -28,11 +28,6 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
   protected hearts: FloatingItem[] = [];
   protected petals: FloatingItem[] = [];
 
-  protected isLocked = true;
-  protected countdownText = '';
-
-  private unlockAt: Date | null = null;
-  private countdownIntervalId: ReturnType<typeof setInterval> | null = null;
 
   constructor(private app: App,
     @Inject(PLATFORM_ID) platformId: object,
@@ -47,60 +42,10 @@ export class HeroSectionComponent implements OnInit, OnDestroy {
   }
 
 ngOnInit(): void {
-  if (typeof window === 'undefined') return;
-
-  this.unlockAt = this.getToday11AM();
-
-  // If already past 11:00 AM, do not lock
-  if (new Date() >= this.unlockAt) {
-    this.isLocked = false;
-    return;
-  }
-
-  this.isLocked = true;
-  this.updateCountdown();
-
-  this.countdownIntervalId = setInterval(() => {
-    this.updateCountdown();
-  }, 1000);
-
-  document.body.style.overflow = 'hidden';
 }
 
 
   ngOnDestroy(): void {
-    if (this.countdownIntervalId) {
-      clearInterval(this.countdownIntervalId);
-    }
-    document.body.style.overflow = '';
-  }
-
-  private getToday11AM(): Date {
-  const now = new Date();
-  const today11 = new Date(now);
-  today11.setHours(11, 0, 0, 0);
-  return today11;
-}
-
-
-  private updateCountdown(): void {
-    if (!this.unlockAt) return;
-    const now = new Date();
-    if (now >= this.unlockAt) {
-      this.isLocked = false;
-      this.countdownText = '';
-      document.body.style.overflow = '';
-      if (this.countdownIntervalId) {
-        clearInterval(this.countdownIntervalId);
-        this.countdownIntervalId = null;
-      }
-      return;
-    }
-    const ms = this.unlockAt.getTime() - now.getTime();
-    const s = Math.floor((ms / 1000) % 60);
-    const m = Math.floor((ms / 1000 / 60) % 60);
-    const h = Math.floor(ms / 1000 / 60 / 60);
-    this.countdownText = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   }
 
   startExperience() {
